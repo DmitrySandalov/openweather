@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Open Weather</string>
+    <string name="action_settings">Settings</string>
+    <string name="action_update">Update</string>
+    <string name="init">&#8230;</string>
+
+</resources>
