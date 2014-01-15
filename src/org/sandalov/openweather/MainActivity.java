@@ -21,8 +21,11 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
@@ -39,12 +42,12 @@ public class MainActivity extends Activity {
 	private TextView conditionField;
 	private LocationManager locationManager;
 	private String provider;
-
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-
+		
 		cityField = (TextView) findViewById(R.id.city);
 		dateField = (TextView) findViewById(R.id.date);
 		temperatureField = (TextView) findViewById(R.id.temperature);
@@ -84,6 +87,11 @@ public class MainActivity extends Activity {
 	        case R.id.action_update:
 	            updateWeather();
 	            return true;
+	        case R.id.action_settings:
+	            // Launch settings activity
+	            Intent i = new Intent(this, SettingsActivity.class);
+	            startActivity(i);
+	            return true;
 	        default:
 	            return super.onOptionsItemSelected(item);
 	    }
@@ -104,10 +112,13 @@ public class MainActivity extends Activity {
 	}
 
 	public void onLocationChanged(Location location) {
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+		String tempUnit = prefs.getString("units_temperature", null);
+
 		String lat = String.valueOf(location.getLatitude());
 		String lng = String.valueOf(location.getLongitude());
 		GetJsonWeather weather = new GetJsonWeather();
-		weather.execute(new String[]{lat, lng});
+		weather.execute(new String[]{lat, lng, tempUnit});
 	}
 	
 	private class GetJsonWeather extends AsyncTask<String, Void, String> {
@@ -166,7 +177,11 @@ public class MainActivity extends Activity {
 					cityCountry = sysObj.getString("country");
 					
 					JSONObject mainObj = listObj.getJSONObject("main");
-					temperature = String.valueOf(mainObj.getInt("temp"));
+					if (new String("Celsius").equals(params[2])) {
+						temperature = String.valueOf(mainObj.getInt("temp"));
+					} else {
+						temperature = "Far";
+					}
 					humidity = String.valueOf(mainObj.getInt("humidity"));
 					pressure = String.valueOf(mainObj.getInt("pressure"));
 					

@@ -24,6 +24,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name="org.sandalov.openweather.SettingsActivity"></activity>
     </application>
 
 </manifest>
