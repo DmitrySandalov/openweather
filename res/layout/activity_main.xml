@@ -12,6 +12,7 @@
         android:id="@+id/date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
         android:text="@string/init" />
 
     <TextView
@@ -19,6 +20,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/date"
+        android:layout_centerHorizontal="true"
         android:text="@string/init" />
 
     <TextView
@@ -26,6 +28,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/city"
+        android:layout_centerInParent="true"
+        android:textSize="32sp"
         android:text="@string/init" />
 
     <TextView
@@ -34,6 +38,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/city"
         android:layout_toRightOf="@id/temperature"
+        android:textSize="32sp"
         android:text="@string/init" />
 
     <TextView
@@ -41,52 +46,49 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/temperature"
-        android:text="@string/init" />
-
+        android:layout_centerHorizontal="true"
+        android:text="@string/init" />        
     <TextView
         android:id="@+id/humidityUnits"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/temperature"
         android:layout_toRightOf="@id/humidity"
-        android:text="@string/init" />
-
+        android:text="@string/init" />        
     <TextView
         android:id="@+id/pressure"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/humidity"
-        android:text="@string/init" />
-
+        android:layout_centerHorizontal="true"
+        android:text="@string/init" />        
     <TextView
         android:id="@+id/pressureUnits"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/humidity"
         android:layout_toRightOf="@id/pressure"
-        android:text="@string/init" />
-
+        android:text="@string/init" />        
     <TextView
         android:id="@+id/windSpeed"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/pressure"
-        android:text="@string/init" />
-
+        android:layout_centerHorizontal="true"
+        android:text="@string/init" />        
     <TextView
         android:id="@+id/windSpeedUnits"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/pressure"
         android:layout_toRightOf="@id/windSpeed"
-        android:text="@string/init" />
-
+        android:text="@string/init" />        
     <TextView
         android:id="@+id/condition"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/windSpeed"
-        android:text="@string/init" />
-
+        android:layout_centerHorizontal="true"
+                android:text="@string/init" />
     
 </RelativeLayout>
