@@ -48,7 +48,7 @@ public class MainActivity extends Activity {
 	private String provider;
 	
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	protected void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		
@@ -65,7 +65,8 @@ public class MainActivity extends Activity {
 		conditionField = (TextView) findViewById(R.id.condition);
 
 		// Get the location manager
-		locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+		locationManager = (LocationManager) getSystemService(
+				Context.LOCATION_SERVICE);
 		// Define the criteria how to select the location provider -> use
 		// default
 		Criteria criteria = new Criteria();
@@ -82,14 +83,14 @@ public class MainActivity extends Activity {
 	}
 
 	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
+	public boolean onCreateOptionsMenu(final Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
 	}
 	
 	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
+	public final boolean onOptionsItemSelected(final MenuItem item) {
 	    // Handle presses on the action bar items
 	    switch (item.getItemId()) {
 	        case R.id.action_update:
@@ -120,7 +121,8 @@ public class MainActivity extends Activity {
 	}
 
 	public void onLocationChanged(Location location) {
-		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+		SharedPreferences prefs = PreferenceManager.
+				getDefaultSharedPreferences(this);
 		String tempUnit = prefs.getString("units_temperature", null);
 
 		String lat = String.valueOf(location.getLatitude());
@@ -142,14 +144,18 @@ public class MainActivity extends Activity {
 		private String windSpeed;
 		private String windSpeedUnits;
 		private String condition;
-		private String date;		
+		private String date;
 		
 		@Override
-		protected String doInBackground(String... params) {
+		protected String doInBackground(final String... params) {
 			
 			// Get JSON
-			DefaultHttpClient httpclient = new DefaultHttpClient(new BasicHttpParams());
-			HttpGet httpget = new HttpGet("http://api.openweathermap.org/data/2.5/find?lat=" + params[0] +"&lon=" + params[1] + "&units=metric&type=accurate&cnt=1&lang=ru&mode=json");
+			DefaultHttpClient httpclient = new DefaultHttpClient(
+					new BasicHttpParams());
+			HttpGet httpget = new HttpGet(
+					"http://api.openweathermap.org/data/2.5/find?lat=" 
+					+ params[0] + "&lon=" + params[1] 
+					+ "&units=metric&type=accurate&cnt=1&lang=ru&mode=json");
 			// Depends on your web service
 			httpget.setHeader("Content-type", "application/json");
 
@@ -161,27 +167,28 @@ public class MainActivity extends Activity {
 
 			    inputStream = entity.getContent();
 			    // json is UTF-8 by default
-			    BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"), 8);
+			    BufferedReader reader = new BufferedReader(
+			    		new InputStreamReader(inputStream, "UTF-8"), 8);
 			    StringBuilder sb = new StringBuilder();
 
 			    String line = null;
-			    while ((line = reader.readLine()) != null)
-			    {
+			    while ((line = reader.readLine()) != null) {
 			        sb.append(line + "\n");
 			    }
 			    result = sb.toString();
 			} catch (Exception e) {
 			    // Oops
 			}
-			finally {
-			    try{if(inputStream != null)inputStream.close();}catch(Exception squish){}
+			finally { 
+				try { if (inputStream != null) inputStream.close();}
+			    catch (Exception squish) { }
 			}
 
 			// Parse JSON
 			try {
 				JSONObject rootObj = new JSONObject(result);
 				JSONArray list = rootObj.getJSONArray("list");
-				for (int i=0; i<list.length(); i++) {
+				for (int i = 0; i < list.length(); i++) {
 					JSONObject listObj = list.getJSONObject(i);
 					cityName = listObj.getString("name");
 					
@@ -192,37 +199,44 @@ public class MainActivity extends Activity {
 					int temp = mainObj.getInt("temp");
 					if (params[2].equals(new String("Celsius"))) {
 						temperature = String.valueOf(temp);
-						temperatureUnits = getResources().getString(R.string.tempUnitsCelsius);
+						temperatureUnits = getResources().
+								getString(R.string.tempUnitsCelsius);
 					} else {
 						temperature = String.valueOf(temp * 9 / 5 + 32);
-						temperatureUnits = getResources().getString(R.string.tempUnitsFarhenheit);
+						temperatureUnits = getResources().
+								getString(R.string.tempUnitsFarhenheit);
 					}
 
 					humidity = String.valueOf(mainObj.getInt("humidity"));
-					humidityUnits = getResources().getString(R.string.unitsPercent);
+					humidityUnits = getResources().
+							getString(R.string.unitsPercent);
 
 					pressure = String.valueOf(mainObj.getInt("pressure"));
-					pressureUnits = getResources().getString(R.string.pressureUnitsHpa);
+					pressureUnits = getResources().
+							getString(R.string.pressureUnitsHpa);
 
 					JSONObject windObj = listObj.getJSONObject("wind");
 					windSpeed = String.valueOf(windObj.getInt("speed"));
-					windSpeedUnits = getResources().getString(R.string.windSpeedUnitsMps);
+					windSpeedUnits = getResources().
+							getString(R.string.windSpeedUnitsMps);
 
-					JSONObject weatherObj = listObj.getJSONArray("weather").getJSONObject(0);
+					JSONObject weatherObj = listObj.
+							getJSONArray("weather").getJSONObject(0);
 					condition = weatherObj.getString("main");
 				}				
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}
 
-	    	SimpleDateFormat df = new SimpleDateFormat("EEE, d MMM yyyy, HH:mm:ss", Locale.US);
+	    	SimpleDateFormat df = new SimpleDateFormat(
+	    			"EEE, d MMM yyyy, HH:mm:ss", Locale.US);
 	    	date = df.format(Calendar.getInstance().getTime());
 
 			return null;
 		}
 
 	    @Override
-	    protected void onPostExecute(String result) {
+	    protected void onPostExecute(final String result) {
 			dateField.setText(date);
 	    	cityField.setText(cityName + " (" + cityCountry + ")");
 	    	temperatureField.setText(temperature);
@@ -244,5 +258,4 @@ public class MainActivity extends Activity {
 	    }
 
 	}
-
 }
