@@ -177,10 +177,11 @@ public class MainActivity extends Activity {
 					cityCountry = sysObj.getString("country");
 					
 					JSONObject mainObj = listObj.getJSONObject("main");
-					if (new String("Celsius").equals(params[2])) {
-						temperature = String.valueOf(mainObj.getInt("temp"));
+					int temp = mainObj.getInt("temp");
+					if (params[2].equals(new String("Celsius"))) {
+						temperature = String.valueOf(temp);
 					} else {
-						temperature = "Far";
+						temperature = String.valueOf(temp * 9 / 5 + 32);
 					}
 					humidity = String.valueOf(mainObj.getInt("humidity"));
 					pressure = String.valueOf(mainObj.getInt("pressure"));
