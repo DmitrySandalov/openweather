@@ -6,5 +6,10 @@
     <string name="action_update">Update</string>
     <string name="init">&#8230;</string>
     <string name="temperature">Temperature</string>
-
+    <string name="tempUnitsCelsius">°C</string>
+    <string name="tempUnitsFarhenheit">°F</string>
+    <string name="unitsPercent">%</string>
+    <string name="pressureUnitsHpa">hPa</string>
+    <string name="windSpeedUnitsMps">m/s</string>
+    
 </resources>

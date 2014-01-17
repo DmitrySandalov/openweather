@@ -29,10 +29,26 @@
         android:text="@string/init" />
 
     <TextView
+        android:id="@+id/temperatureUnits"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/city"
+        android:layout_toRightOf="@id/temperature"
+        android:text="@string/init" />
+
+    <TextView
         android:id="@+id/humidity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/temperature"
+        android:text="@string/init" />
+
+    <TextView
+        android:id="@+id/humidityUnits"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/temperature"
+        android:layout_toRightOf="@id/humidity"
         android:text="@string/init" />
 
     <TextView
@@ -43,10 +59,26 @@
         android:text="@string/init" />
 
     <TextView
+        android:id="@+id/pressureUnits"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/humidity"
+        android:layout_toRightOf="@id/pressure"
+        android:text="@string/init" />
+
+    <TextView
         android:id="@+id/windSpeed"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/pressure"
+        android:text="@string/init" />
+
+    <TextView
+        android:id="@+id/windSpeedUnits"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/pressure"
+        android:layout_toRightOf="@id/windSpeed"
         android:text="@string/init" />
 
     <TextView

@@ -36,9 +36,13 @@ public class MainActivity extends Activity {
 	private TextView cityField;
 	private TextView dateField;
 	private TextView temperatureField;
+	private TextView temperatureUnitsField;
 	private TextView humidityField;
+	private TextView humidityUnitsField;
 	private TextView pressureField;
+	private TextView pressureUnitsField;
 	private TextView windSpeedField;
+	private TextView windSpeedUnitsField;
 	private TextView conditionField;
 	private LocationManager locationManager;
 	private String provider;
@@ -51,9 +55,13 @@ public class MainActivity extends Activity {
 		cityField = (TextView) findViewById(R.id.city);
 		dateField = (TextView) findViewById(R.id.date);
 		temperatureField = (TextView) findViewById(R.id.temperature);
+		temperatureUnitsField = (TextView) findViewById(R.id.temperatureUnits);
 		humidityField = (TextView) findViewById(R.id.humidity);
+		humidityUnitsField = (TextView) findViewById(R.id.humidityUnits);
 		pressureField = (TextView) findViewById(R.id.pressure);
+		pressureUnitsField = (TextView) findViewById(R.id.pressureUnits);
 		windSpeedField = (TextView) findViewById(R.id.windSpeed);
+		windSpeedUnitsField = (TextView) findViewById(R.id.windSpeedUnits);
 		conditionField = (TextView) findViewById(R.id.condition);
 
 		// Get the location manager
@@ -126,9 +134,13 @@ public class MainActivity extends Activity {
 		private String cityName;
 		private String cityCountry;
 		private String temperature;
+		private String temperatureUnits;
 		private String humidity;
+		private String humidityUnits;
 		private String pressure;
+		private String pressureUnits;
 		private String windSpeed;
+		private String windSpeedUnits;
 		private String condition;
 		private String date;		
 		
@@ -180,38 +192,49 @@ public class MainActivity extends Activity {
 					int temp = mainObj.getInt("temp");
 					if (params[2].equals(new String("Celsius"))) {
 						temperature = String.valueOf(temp);
+						temperatureUnits = getResources().getString(R.string.tempUnitsCelsius);
 					} else {
 						temperature = String.valueOf(temp * 9 / 5 + 32);
+						temperatureUnits = getResources().getString(R.string.tempUnitsFarhenheit);
 					}
+
 					humidity = String.valueOf(mainObj.getInt("humidity"));
+					humidityUnits = getResources().getString(R.string.unitsPercent);
+
 					pressure = String.valueOf(mainObj.getInt("pressure"));
-					
+					pressureUnits = getResources().getString(R.string.pressureUnitsHpa);
+
 					JSONObject windObj = listObj.getJSONObject("wind");
 					windSpeed = String.valueOf(windObj.getInt("speed"));
-					
+					windSpeedUnits = getResources().getString(R.string.windSpeedUnitsMps);
+
 					JSONObject weatherObj = listObj.getJSONArray("weather").getJSONObject(0);
 					condition = weatherObj.getString("main");
 				}				
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}
-			
+
 	    	SimpleDateFormat df = new SimpleDateFormat("EEE, d MMM yyyy, HH:mm:ss", Locale.US);
 	    	date = df.format(Calendar.getInstance().getTime());
-			
+
 			return null;
 		}
-		
+
 	    @Override
 	    protected void onPostExecute(String result) {
 			dateField.setText(date);
 	    	cityField.setText(cityName + " (" + cityCountry + ")");
 	    	temperatureField.setText(temperature);
+	    	temperatureUnitsField.setText(temperatureUnits);
 	    	humidityField.setText(humidity);
+	    	humidityUnitsField.setText(humidityUnits);
 	    	pressureField.setText(pressure);
+	    	pressureUnitsField.setText(pressureUnits);
 	    	windSpeedField.setText(windSpeed);
+	    	windSpeedUnitsField.setText(windSpeedUnits);
 	    	conditionField.setText(condition);
-	    	
+
 	    	Context context = getApplicationContext();
 	    	CharSequence text = "Weather updated";
 	    	int duration = Toast.LENGTH_SHORT;
@@ -219,7 +242,7 @@ public class MainActivity extends Activity {
 	    	Toast toast = Toast.makeText(context, text, duration);
 	    	toast.show();
 	    }
-		
+
 	}
 
 }
